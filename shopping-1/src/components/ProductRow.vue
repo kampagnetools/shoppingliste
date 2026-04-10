@@ -11,7 +11,7 @@
     <td class="py-5 whitespace-nowrap relative" :class="expanded ? 'pl-5 pr-4' : 'pl-6 pr-4'">
       <span v-if="expanded" class="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#E30613]" />
       <div class="flex items-center gap-2">
-        <span class="h-2 w-2 rounded-full flex-shrink-0" :class="isActive ? 'bg-green-500' : 'bg-gray-300'" />
+        <span class="h-2 w-2  flex-shrink-0" :class="isActive ? 'bg-green-500' : 'bg-gray-300'" />
         <span class="text-sm font-medium" :class="isActive ? 'text-green-700' : 'text-gray-400'">
           {{ isActive ? 'Aktiv' : 'Ikke aktiv' }}
         </span>
@@ -39,7 +39,7 @@
           title="Klik for at kopiere"
         >{{ localProduct.name }}</span>
         <span v-if="localProduct.version_number > 1"
-          class="flex-shrink-0 text-[10px] font-bold rounded-full px-1.5 py-0.5 bg-indigo-100 text-indigo-600">
+          class="flex-shrink-0 text-[10px] font-bold  px-1.5 py-0.5 bg-indigo-100 text-indigo-600">
           v{{ localProduct.version_number }}
         </span>
         <span v-if="copied === 'name'" class="text-xs text-green-500 font-medium flex-shrink-0">✓</span>
@@ -66,10 +66,10 @@
       <div class="flex items-center gap-1">
         <span
           v-for="theme in (localProduct.themes ?? []).slice(0, 2)" :key="theme.id"
-          class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600"
+          class="inline-flex items-center  px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600"
         >{{ theme.name }}</span>
         <span v-if="(localProduct.themes?.length ?? 0) > 2"
-          class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-500">
+          class="inline-flex items-center  px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-500">
           +{{ localProduct.themes.length - 2 }}
         </span>
         <span v-if="!localProduct.themes?.length" class="text-sm text-gray-300">–</span>
@@ -95,7 +95,7 @@
       <div class="flex items-center justify-end gap-2">
         <button
           @click="toggle"
-          class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-150 active:scale-95"
+          class="inline-flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-all duration-150"
           :class="expanded
             ? 'bg-[#E30613] text-white'
             : 'opacity-0 group-hover:opacity-100 text-gray-500 hover:text-gray-900 hover:bg-gray-100'"
@@ -107,7 +107,7 @@
           v-if="isAdmin"
           @click="openDuplicateModal"
           :disabled="duplicating"
-          class="p-1.5 rounded-lg text-gray-300 hover:text-gray-600 hover:bg-gray-100 active:scale-95 opacity-0 group-hover:opacity-100 transition-all duration-150"
+          class="p-1.5 text-gray-300 hover:text-gray-600 hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-all duration-150"
           title="Dubler produkt"
         ><Copy :size="15" /></button>
       </div>
@@ -117,13 +117,13 @@
   <!-- ── Expanded panel ─────────────────────────────────────── -->
   <tr v-if="expanded">
     <td colspan="6" class="border-b border-red-100 bg-red-50/20">
-      <div class="mx-6 my-4 rounded-xl border border-gray-100 overflow-hidden bg-white">
+      <div class="mx-6 my-4 border border-gray-100 overflow-hidden bg-white">
 
         <!-- Stamdata -->
         <div class="px-8 py-6 bg-white">
           <div class="flex items-center justify-between mb-5">
             <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-              <span class="h-3.5 w-0.5 rounded-full bg-[#E30613]" />
+              <span class="h-3.5 w-0.5  bg-[#E30613]" />
               Stamdata
             </h4>
             <div v-if="isAdmin" class="flex gap-2">
@@ -139,7 +139,7 @@
                 </button>
               </template>
               <template v-else>
-                <button @click="saveMeta" :disabled="savingMeta" class="btn-primary text-xs active:scale-95">
+                <button @click="saveMeta" :disabled="savingMeta" class="btn-primary text-xs">
                   {{ savingMeta ? 'Gemmer…' : 'Gem ændringer' }}
                 </button>
                 <button @click="cancelEditMeta" class="btn-ghost text-xs">Annuller</button>
@@ -209,9 +209,9 @@
         <div class="px-8 py-5 bg-indigo-50/30 border-t border-gray-100">
           <div class="flex items-center justify-between mb-4">
             <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-              <span class="h-3.5 w-0.5 rounded-full bg-indigo-300" />
+              <span class="h-3.5 w-0.5  bg-indigo-300" />
               Versioner
-              <span class="text-[10px] font-bold rounded-full px-1.5 py-0.5 bg-indigo-100 text-indigo-600 normal-case tracking-normal">
+              <span class="text-[10px] font-bold  px-1.5 py-0.5 bg-indigo-100 text-indigo-600 normal-case tracking-normal">
                 {{ loadingVersions ? '…' : versions.length }}
               </span>
             </h4>
@@ -225,10 +225,10 @@
           <div v-else class="space-y-1.5">
             <div
               v-for="v in versions" :key="v.id"
-              class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm"
+              class="flex items-center gap-3 px-3 py-2 text-sm"
               :class="v.id === localProduct.id ? 'bg-indigo-50 border border-indigo-100' : 'bg-white border border-gray-100'"
             >
-              <span class="flex-shrink-0 text-[10px] font-bold rounded-full px-1.5 py-0.5"
+              <span class="flex-shrink-0 text-[10px] font-bold  px-1.5 py-0.5"
                 :class="v.id === localProduct.id ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-600'">
                 v{{ v.version_number }}
               </span>
@@ -236,7 +236,7 @@
                 {{ v.name }}
               </span>
               <span class="text-xs tabular-nums text-gray-400">{{ eurToDkk(v.price_eur) }}</span>
-              <span v-if="v.is_archived" class="text-[10px] font-semibold text-amber-600 bg-amber-50 rounded-full px-1.5 py-0.5">Arkiveret</span>
+              <span v-if="v.is_archived" class="text-[10px] font-semibold text-amber-600 bg-amber-50  px-1.5 py-0.5">Arkiveret</span>
               <span v-else-if="v.id === localProduct.id" class="text-[10px] font-semibold text-indigo-600">Denne</span>
               <span class="text-xs text-gray-300 tabular-nums">{{ fmt(v.created_at) }}</span>
             </div>
@@ -248,7 +248,7 @@
           <!-- Tab bar -->
           <div class="flex items-center gap-0 px-8 pt-5 pb-0 border-b border-gray-200">
             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mr-6 pb-3 flex items-center gap-2 whitespace-nowrap">
-              <span class="h-3.5 w-0.5 rounded-full bg-slate-300" />
+              <span class="h-3.5 w-0.5  bg-slate-300" />
               Kanalstyring
             </h4>
             <button
@@ -262,7 +262,7 @@
             >
               {{ ch.label }}
               <span
-                class="inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold tabular-nums min-w-[18px]"
+                class="inline-flex items-center justify-center  px-1.5 py-0.5 text-[10px] font-bold tabular-nums min-w-[18px]"
                 :class="placementsFor(ch.key).length
                   ? ch.badge
                   : 'bg-gray-100 text-gray-400'"
@@ -286,7 +286,7 @@
                   <div v-for="p in placementsFor(ch.key)" :key="p.id">
                     <!-- View -->
                     <div v-if="editingPlacementId !== p.id"
-                      class="group/pl flex items-center gap-4 rounded-lg bg-white border border-gray-100 hover:border-gray-200 px-4 py-3 transition-all">
+                      class="group/pl flex items-center gap-4 bg-white border border-gray-100 hover:border-gray-200 px-4 py-3 transition-all">
                       <div class="min-w-0 flex-1 flex items-center gap-6">
                         <div class="min-w-[160px]">
                           <div class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Titel</div>
@@ -342,7 +342,7 @@
                 </div>
 
                 <button v-if="addingChannel !== ch.key" @click.stop="openAddPlacement(ch.key)"
-                  class="border border-dashed border-gray-200 rounded-lg px-4 py-2 text-xs text-gray-400 hover:text-[#E30613] hover:border-[#E30613]/40 transition-colors flex items-center gap-1.5">
+                  class="border border-dashed border-gray-200 px-4 py-2 text-xs text-gray-400 hover:text-[#E30613] hover:border-[#E30613]/40 transition-colors flex items-center gap-1.5">
                   <Plus :size="13" /> Tilføj placering
                 </button>
               </div>
@@ -366,7 +366,7 @@
   <Teleport to="body">
     <div v-if="showLog" class="fixed inset-0 z-50" @click.self="showLog = false">
       <div
-        class="absolute bg-white rounded-xl border border-gray-200 shadow-xl w-[380px] overflow-hidden"
+        class="absolute bg-white border border-gray-200 w-[380px] overflow-hidden"
         :style="logStyle"
       >
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
@@ -374,7 +374,7 @@
             <h4 class="text-sm font-semibold text-gray-900">Aktivitetslog</h4>
             <p class="text-xs text-gray-400 truncate max-w-[260px]">{{ localProduct.name }}</p>
           </div>
-          <button @click="showLog = false" class="p-1.5 rounded-full hover:bg-gray-200 text-gray-400 transition-colors">
+          <button @click="showLog = false" class="p-1.5  hover:bg-gray-200 text-gray-400 transition-colors">
             <X :size="15" />
           </button>
         </div>
@@ -387,7 +387,7 @@
           </div>
           <ul v-else class="divide-y divide-gray-50">
             <li v-for="entry in logEntries" :key="entry.id" class="flex gap-3 px-4 py-3">
-              <span class="mt-0.5 flex-shrink-0 h-6 w-6 rounded-full flex items-center justify-center text-[11px]"
+              <span class="mt-0.5 flex-shrink-0 h-6 w-6  flex items-center justify-center text-[11px]"
                 :class="logBadgeClass(entry.action)">
                 {{ logIcon(entry.action) }}
               </span>
@@ -407,7 +407,7 @@
   <!-- ── Version modal ────────────────────────────────────── -->
   <Teleport to="body">
     <div v-if="showVersionModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25" @click.self="showVersionModal = false">
-      <div class="bg-white rounded-xl border border-gray-200 w-full max-w-sm p-6">
+      <div class="bg-white border border-gray-200 w-full max-w-sm p-6">
         <h3 class="text-sm font-semibold text-gray-900 mb-1">Ny version</h3>
         <p class="text-xs text-gray-400 mb-4">Opretter en ny version i samme produktfamilie. Placeringer kopieres ikke.</p>
         <input
@@ -420,7 +420,7 @@
         />
         <div class="flex justify-end gap-2">
           <button @click="showVersionModal = false" class="btn-ghost">Annuller</button>
-          <button @click="confirmCreateVersion" :disabled="creatingVersion || !versionName.trim()" class="btn-primary active:scale-95">
+          <button @click="confirmCreateVersion" :disabled="creatingVersion || !versionName.trim()" class="btn-primary">
             {{ creatingVersion ? 'Opretter…' : 'Opret version' }}
           </button>
         </div>
@@ -431,7 +431,7 @@
   <!-- ── Duplicate modal ────────────────────────────────────── -->
   <Teleport to="body">
     <div v-if="showDuplicateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25" @click.self="showDuplicateModal = false">
-      <div class="bg-white rounded-xl border border-gray-200 w-full max-w-sm p-6">
+      <div class="bg-white border border-gray-200 w-full max-w-sm p-6">
         <h3 class="text-sm font-semibold text-gray-900 mb-1">Dubler produkt</h3>
         <p class="text-xs text-gray-400 mb-4">Vælg navn til kopien — placements kopieres ikke.</p>
         <input
@@ -444,7 +444,7 @@
         />
         <div class="flex justify-end gap-2">
           <button @click="showDuplicateModal = false" class="btn-ghost">Annuller</button>
-          <button @click="confirmDuplicate" :disabled="duplicating || !duplicateName.trim()" class="btn-primary active:scale-95">
+          <button @click="confirmDuplicate" :disabled="duplicating || !duplicateName.trim()" class="btn-primary">
             {{ duplicating ? 'Kopierer…' : 'Dubler' }}
           </button>
         </div>

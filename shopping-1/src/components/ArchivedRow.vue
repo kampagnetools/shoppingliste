@@ -9,10 +9,10 @@
       <div class="flex items-center gap-1">
         <span
           v-for="theme in (product.themes ?? []).slice(0, 2)" :key="theme.id"
-          class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-400"
+          class="inline-flex items-center  px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-400"
         >{{ theme.name }}</span>
         <span v-if="(product.themes?.length ?? 0) > 2"
-          class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-400">
+          class="inline-flex items-center  px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-400">
           +{{ product.themes.length - 2 }}
         </span>
         <span v-if="!product.themes?.length" class="text-sm text-gray-300">–</span>
@@ -35,14 +35,14 @@
         <button
           @click="reactivate"
           :disabled="working"
-          class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors active:scale-95"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors"
         >
           <RotateCcw :size="13" /> Genaktivér
         </button>
         <button
           @click="duplicate"
           :disabled="working"
-          class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
         >
           <Copy :size="13" /> Dubler
         </button>

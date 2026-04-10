@@ -1,11 +1,11 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" @click.self="$emit('close')">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col animate-in fade-in-0 zoom-in-95 duration-200">
+    <div class="bg-white w-full max-w-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col animate-in fade-in-0 zoom-in-95 duration-200">
 
       <!-- Header -->
-      <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
+      <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-white">
         <h3 class="text-base font-bold text-slate-900">Importer CSV</h3>
-        <button @click="$emit('close')" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+        <button @click="$emit('close')" class="p-1.5 hover:bg-slate-100 text-slate-400 transition-colors">
           <X :size="18" />
         </button>
       </div>
@@ -18,67 +18,48 @@
             type="file"
             accept=".csv"
             @change="onFileSelect"
-            class="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:font-semibold file:cursor-pointer hover:file:bg-indigo-700"
+            class="w-full px-4 py-3 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-indigo-600 file:text-white file:font-semibold file:cursor-pointer hover:file:bg-indigo-700"
           />
           <p class="text-xs text-slate-500 mt-3 font-medium">Format: Tema;Pris;Beskrivelse (semikolon-adskilt)</p>
         </div>
 
         <!-- Step 2: Preview table -->
         <div v-else>
-          <div class="flex items-center justify-between mb-4">
-            <h4 class="text-sm font-semibold text-slate-700">Forhåndsvisning ({{ rows.length }} rækker)</h4>
-            <button
-              @click="resetFile"
-              class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors font-medium"
-            >
-              Skift fil
-            </button>
+          <h4 class="text-sm font-semibold text-slate-700 mb-4">Forhåndsvisning ({{ rows.length }} rækker)</h4>
+
+          <!-- Warning if columns missing -->
+          <div v-if="rows.some(r => r.hasMissingColumns)" class="mb-4 bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+            <strong>⚠️ Advarsel:</strong> {{ rows.filter(r => r.hasMissingColumns).length }} rækker mangler kolonne(r). De importeres med tomme værdier.
           </div>
 
-          <!-- Warnings -->
-          <div v-if="unmatchedThemes.size > 0" class="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
-            <strong class="font-semibold">⚠️ Advarsel:</strong> {{ unmatchedThemes.size }} tema(er) blev ikke fundet
-            <span class="block mt-2 font-mono text-xs text-amber-700">{{ Array.from(unmatchedThemes).join(', ') }}</span>
-          </div>
 
-          <div v-if="errorMsg" class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 font-medium">
+          <div v-if="errorMsg" class="mb-4 bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 font-medium">
             {{ errorMsg }}
           </div>
 
           <!-- Preview table (scrollable) -->
-          <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
-            <table class="w-full text-sm">
-              <thead class="bg-gradient-to-r from-slate-100 to-slate-50 border-b border-slate-200">
-                <tr>
-                  <th class="px-4 py-3 text-left font-bold text-slate-700 w-24">Tema</th>
-                  <th class="px-4 py-3 text-left font-bold text-slate-700 w-24">Pris</th>
-                  <th class="px-4 py-3 text-left font-bold text-slate-700 flex-1">Beskrivelse</th>
-                </tr>
-              </thead>
-              <tbody class="max-h-[300px] overflow-y-auto block w-full">
-                <tr v-for="(row, idx) in rows" :key="idx" class="border-b border-slate-200 hover:bg-indigo-50 transition-colors block w-full grid" style="grid-template-columns: 96px 96px 1fr;">
-                  <td class="px-4 py-3 text-slate-900">
-                    <span v-if="row.themeId" class="inline-block bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full text-xs font-semibold">
-                      {{ row.themeName }}
-                    </span>
-                    <span v-else class="inline-block bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full text-xs font-semibold">
-                      — ukendt
-                    </span>
-                  </td>
-                  <td class="px-4 py-3 text-slate-700 font-mono text-xs">{{ row.priceExample }}</td>
-                  <td class="px-4 py-3 text-slate-700 truncate text-xs">{{ row.description }}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="border border-slate-200 bg-slate-50">
+            <!-- Header - fixed -->
+            <div class="bg-slate-100 border-b border-slate-200 grid px-4 py-3 sticky top-0" style="grid-template-columns: 1fr 60px; gap: 12px;">
+              <div class="text-xs font-bold text-slate-700">Produkt</div>
+              <div class="text-xs font-bold text-slate-700 text-right">Pris</div>
+            </div>
+            <!-- Rows - scrollable -->
+            <div class="max-h-[300px] overflow-y-auto">
+              <div v-for="(row, idx) in rows" :key="idx" class="grid px-4 py-3 border-b border-slate-200 transition-colors" :class="row.hasMissingColumns ? 'bg-amber-50 hover:bg-amber-100' : 'hover:bg-slate-100'" style="grid-template-columns: 1fr 60px; gap: 12px; align-items: center;">
+                <div class="text-xs truncate font-medium" :class="row.hasMissingColumns ? 'text-amber-700' : 'text-slate-700'">{{ row.description || '—' }}</div>
+                <div class="text-xs font-mono text-right" :class="row.hasMissingColumns ? 'text-amber-700' : 'text-slate-700'">{{ row.priceExample || '—' }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Footer -->
-      <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200 flex gap-3 justify-end">
+      <div class="px-6 py-4 bg-white border-t border-slate-200 flex gap-3 justify-end">
         <button
           @click="$emit('close')"
-          class="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
+          class="px-4 py-2.5 border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
         >
           Annuller
         </button>
@@ -86,7 +67,7 @@
           v-if="parsed && rows.length > 0"
           @click="doImport"
           :disabled="importing"
-          class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold shadow-md active:scale-95"
+          class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 text-white transition-all text-sm font-semibold"
         >
           <span v-if="importing">Importerer...</span>
           <span v-else>Importer {{ rows.length }} produkter</span>
@@ -102,7 +83,6 @@ import { X } from 'lucide-vue-next'
 import { supabase } from '@/lib/supabase.js'
 
 const props = defineProps({
-  themes: { type: Array, default: () => [] },
   dkkRate: { type: Number, default: 7.46 },
   profile: { type: Object, default: () => ({}) }
 })
@@ -114,13 +94,6 @@ const rows = ref([])
 const importing = ref(false)
 const errorMsg = ref('')
 
-const unmatchedThemes = computed(() => {
-  const unmatched = new Set()
-  rows.value.forEach(row => {
-    if (!row.themeId) unmatched.add(row.themeName)
-  })
-  return unmatched
-})
 
 function onFileSelect(event) {
   const file = event.target.files[0]
@@ -142,25 +115,29 @@ function onFileSelect(event) {
 
       for (const line of lines) {
         const parts = line.split(';').map(p => p.trim())
-        if (parts.length < 3) continue
+        if (parts.length < 1) continue
 
-        const themeName = parts[0]
-        const priceRaw = parts[1]
-        const description = parts[2]
+        let tema = parts[0]
 
-        // Match theme by name (case-insensitive)
-        const theme = props.themes.find(t => t.name.toLowerCase() === themeName.toLowerCase())
-        const themeId = theme?.id || null
+        // Remove BOM if present
+        if (tema.charCodeAt(0) === 0xFEFF) {
+          tema = tema.slice(1)
+        }
+
+        const priceRaw = parts[1] || ''
+        const description = parts[2] || ''
 
         // Parse price: strip "kr.", "pr. dag", etc., convert DKK to EUR
-        const priceEur = parseDanishPrice(priceRaw)
+        const priceEur = priceRaw ? parseDanishPrice(priceRaw) : 0
+
+        const hasMissingColumns = !priceRaw || !description
 
         parsed_rows.push({
-          themeName,
-          themeId,
+          tema,
           priceExample: priceRaw,
           priceEur,
-          description
+          description,
+          hasMissingColumns
         })
       }
 
@@ -216,28 +193,12 @@ async function doImport() {
 
     if (insertError) throw new Error('Produkter kunne ikke indsættes: ' + insertError.message)
 
-    // Link themes to products
-    let themeLinksCreated = 0
-    for (let i = 0; i < rows.value.length; i++) {
-      const row = rows.value[i]
-      if (!row.themeId || !createdProducts[i]) continue
-
-      const { error: linkError } = await supabase
-        .from('product_themes')
-        .insert({
-          product_id: createdProducts[i].id,
-          theme_id: row.themeId
-        })
-
-      if (!linkError) themeLinksCreated++
-    }
-
     // Log activity
     if (props.profile.id) {
       await supabase.from('activity_log').insert({
         product_id: null, // bulk import
         action: 'csv_import',
-        description: `Importerede ${createdProducts.length} produkter (${themeLinksCreated} med tema)`,
+        description: `Importerede ${createdProducts.length} produkter fra CSV`,
         user_id: props.profile.id,
         user_name: props.profile.full_name || props.profile.email,
         created_at: new Date().toISOString()

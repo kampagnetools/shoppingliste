@@ -4,7 +4,7 @@
     <LoginForm v-if="!session" />
 
     <template v-else>
-      <header class="bg-white border-b-2 border-slate-200 sticky top-0 z-40 shadow-sm">
+      <header class="bg-white border-b-2 border-slate-200 sticky top-0 z-40">
         <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center gap-6">
 
           <h1 class="text-slate-900 font-bold text-sm tracking-tight uppercase">Shoppingliste</h1>
@@ -12,7 +12,7 @@
           <nav v-if="isAdmin" class="flex items-center gap-2">
             <button
               @click="showAddProduct = true"
-              class="group flex items-center gap-2 rounded-lg bg-[#E30613] hover:bg-red-700 text-white px-4 py-2 text-xs font-bold shadow-sm active:scale-95 transition-all"
+              class="group flex items-center gap-2 bg-[#E30613] hover:bg-red-700 text-white px-4 py-2 text-xs font-bold transition-all"
             >
               <Plus :size="14" stroke-width="3" class="group-hover:rotate-90 transition-transform" />
               <span>Nyt produkt</span>
@@ -20,7 +20,7 @@
 
             <button
               @click="showCsvImport = true"
-              class="flex items-center gap-2 rounded-lg bg-white border border-slate-200 text-slate-600 px-4 py-2 text-xs font-medium hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 active:scale-95 transition-all"
+              class="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-4 py-2 text-xs font-medium hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition-all"
             >
               <Upload :size="14" />
               <span class="hidden md:inline">Importer CSV</span>
@@ -28,7 +28,7 @@
 
             <button
               @click="showThemeManager = true"
-              class="flex items-center gap-2 rounded-lg bg-white border border-slate-200 text-slate-600 px-4 py-2 text-xs font-medium hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 active:scale-95 transition-all"
+              class="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-4 py-2 text-xs font-medium hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition-all"
             >
               <Tags :size="14" />
               <span class="hidden md:inline">Temaer</span>
@@ -51,7 +51,7 @@
                 {{ isAdmin ? 'Admin' : 'Standard' }}
               </div>
 
-              <button @click="signOut" class="text-slate-400 hover:text-red-500 p-2 rounded-lg transition-colors group" title="Log ud">
+              <button @click="signOut" class="text-slate-400 hover:text-red-500 p-2 transition-colors group" title="Log ud">
                 <LogOut :size="18" class="group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
@@ -71,12 +71,12 @@
               v-model="searchQuery"
               type="text"
               placeholder="Søg navn eller links…"
-              class="w-full bg-white border border-slate-200 hover:border-slate-300 pl-10 pr-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all rounded-lg"
+              class="w-full bg-white border border-slate-200 hover:border-slate-300 pl-10 pr-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all"
             />
           </div>
 
           <!-- Pris inline -->
-          <div class="flex items-center gap-2 bg-white border border-slate-200 rounded-lg overflow-hidden hover:border-slate-300 transition-colors"
+          <div class="flex items-center gap-2 bg-white border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors"
             :class="isPriceFiltered ? 'border-indigo-300 ring-2 ring-indigo-100' : ''">
             <span class="px-3 text-[11px] font-black text-slate-400 uppercase tracking-widest py-2.5">
               DKK
@@ -103,7 +103,7 @@
           <!-- Temaer -->
           <select
             v-model="selectedTheme"
-            class="w-48 bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 text-sm text-slate-700 font-bold focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all appearance-none rounded-lg"
+            class="w-48 bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 text-sm text-slate-700 font-bold focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all appearance-none"
             :class="selectedTheme ? 'border-indigo-300 ring-2 ring-indigo-100 text-indigo-700' : ''"
           >
             <option value="">Alle temaer</option>
@@ -113,7 +113,7 @@
           <!-- Versioner -->
           <select
             v-model="selectedVersionId"
-            class="w-48 bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 text-sm font-bold focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all appearance-none rounded-lg"
+            class="w-48 bg-white border border-slate-200 hover:border-slate-300 px-4 py-2.5 text-sm font-bold focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 cursor-pointer transition-all appearance-none"
             :class="selectedVersionId ? 'border-indigo-300 ring-2 ring-indigo-100 text-indigo-700' : 'text-slate-700'"
           >
             <option value="">Alle versioner</option>
@@ -126,16 +126,16 @@
       </div>
 
       <main class="max-w-screen-2xl mx-auto px-6 py-8">
-        <div class="bg-white border border-slate-200 shadow-md rounded-2xl overflow-hidden">
+        <div class="bg-white border border-slate-200 overflow-hidden">
 
           <div v-if="loadingProducts" class="py-40 flex flex-col items-center justify-center text-center">
-            <div class="h-12 w-12 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+            <div class="h-12 w-12 border-4 border-slate-100 border-t-indigo-600  animate-spin mb-4"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Synkroniserer database</p>
           </div>
 
           <template v-else>
             <!-- Tabs -->
-            <div class="flex items-center gap-0 px-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+            <div class="flex items-center gap-0 px-6 border-b border-slate-200 bg-white">
               <button
                 v-for="tab in [
                   { key: 'products', label: 'Produkt', count: processedProducts.length },
@@ -150,7 +150,7 @@
                 {{ tab.label }}
                 <span class="rounded-full min-w-[24px] px-2.5 py-0.5 text-[11px] font-black tabular-nums text-center transition-all"
                   :class="activeTab === tab.key
-                    ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white'
                     : 'bg-slate-100 text-slate-500'">
                   {{ tab.count }}
                 </span>
@@ -159,22 +159,22 @@
             </div>
 
             <!-- Sticky bulk action bar -->
-            <div v-if="selectedIds.length > 0" class="sticky top-0 z-20 px-6 py-3 bg-gradient-to-r from-indigo-50 to-indigo-100 border-b-2 border-indigo-300 flex items-center justify-between shadow-md">
+            <div v-if="selectedIds.length > 0" class="sticky top-0 z-20 px-6 py-3 bg-gradient-to-r from-indigo-50 to-indigo-100 border-b-2 border-indigo-300 flex items-center justify-between">
               <span class="text-sm font-bold text-indigo-700">{{ selectedIds.length }} {{ selectedIds.length === 1 ? 'produkt' : 'produkter' }} valgt</span>
               <div class="flex gap-2">
                 <button
                   v-if="selectedIds.length === 1"
                   @click="showAddMediaModal = true"
-                  class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-semibold transition-all shadow-md active:scale-95"
+                  class="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-all"
                 >
                   <span>Tilføj medie</span>
                 </button>
                 <button
                   @click="openProductDetail()"
                   :disabled="selectedIds.length !== 1"
-                  class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-md active:scale-95"
+                  class="flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all"
                   :class="selectedIds.length === 1
-                    ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white'
+                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
                     : 'bg-slate-300 text-slate-500 cursor-not-allowed'"
                 >
                   <span>Rediger</span>
@@ -186,7 +186,7 @@
             <template v-if="activeTab === 'products'">
               <div class="border-t border-slate-200">
                 <!-- Table headers -->
-                <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gradient-to-r from-slate-50 to-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2fr 0.9fr 1.2fr 1fr 0.9fr 1fr; gap: 1.25rem;">
+                <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2fr 0.9fr 1.2fr 1fr 0.9fr 1fr; gap: 1.25rem;">
                   <div class="flex items-center">
                     <input type="checkbox" :checked="selectedIds.length === processedProducts.length && processedProducts.length > 0" @change="toggleSelectAll" class="w-4 h-4 cursor-pointer" />
                   </div>
@@ -297,7 +297,7 @@
                 <div v-if="processedProducts.length === 0" class="py-32 flex flex-col items-center">
                   <Search :size="48" class="text-slate-200 mb-4" stroke-width="1.5" />
                   <h3 class="text-slate-900 font-bold text-lg">Intet match fundet</h3>
-                  <button @click="clearFilters" class="mt-6 text-indigo-600 font-bold text-sm bg-indigo-50 px-6 py-2 rounded-xl">Nulstil</button>
+                  <button @click="clearFilters" class="mt-6 text-indigo-600 font-bold text-sm bg-indigo-50 px-6 py-2">Nulstil</button>
                 </div>
               </div>
             </template>
@@ -306,7 +306,7 @@
             <template v-else-if="activeTab === 'active'">
               <div class="border-t border-slate-200">
                 <!-- Table headers -->
-                <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gradient-to-r from-slate-50 to-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2.5fr 0.9fr 1.2fr 1fr 2fr 1.2fr; gap: 1.25rem;">
+                <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2.5fr 0.9fr 1.2fr 1fr 2fr 1.2fr; gap: 1.25rem;">
                   <div class="flex items-center">
                     <input type="checkbox" :checked="selectedIds.length === activeProducts.length && activeProducts.length > 0" @change="toggleSelectAll" class="w-4 h-4 cursor-pointer" />
                   </div>
@@ -442,7 +442,7 @@
                 </div>
                 <div v-else>
                   <!-- Table headers -->
-                  <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-gradient-to-r from-slate-50 to-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2fr 0.9fr 1.2fr 1fr 0.9fr 1fr; gap: 1.25rem;">
+                  <div class="hidden lg:grid px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wide bg-white border-b border-slate-200" style="grid-template-columns: 0.4fr 2fr 0.9fr 1.2fr 1fr 0.9fr 1fr; gap: 1.25rem;">
                     <div class="flex items-center">
                       <input type="checkbox" :checked="selectedIds.length === archivedProducts.length && archivedProducts.length > 0" @change="toggleSelectAll" class="w-4 h-4 cursor-pointer" />
                     </div>
@@ -585,7 +585,7 @@
                           <template v-for="channel in ['paid', 'web', 'email', 'some'].filter(c => product.placements.some(p => p.channel === c))" :key="channel">
                             <span class="text-xs bg-slate-700 text-white px-2 py-1 rounded whitespace-nowrap flex items-center gap-1.5">
                               {{ getMediaLabel(channel) }}
-                              <span class="inline-flex items-center justify-center h-4 w-4 rounded-full bg-white bg-opacity-20 text-xs font-semibold">{{ product.placements.filter(p => p.channel === channel).length }}</span>
+                              <span class="inline-flex items-center justify-center h-4 w-4  bg-white bg-opacity-20 text-xs font-semibold">{{ product.placements.filter(p => p.channel === channel).length }}</span>
                             </span>
                           </template>
                         </div>
@@ -643,17 +643,17 @@
               </div>
             </template>
 
-            <footer class="px-6 py-4 border-t border-slate-200 bg-gradient-to-r from-slate-50 to-white flex items-center justify-between">
+            <footer class="px-6 py-4 border-t border-slate-200 bg-white flex items-center justify-between">
               <div class="flex items-center gap-6">
                 <div class="flex items-center gap-3">
-                  <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-sm">
+                  <div class="h-8 w-8 bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
                     <span class="text-xs font-bold text-white tabular-nums">{{ processedProducts.length }}</span>
                   </div>
                   <span class="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Produkter</span>
                 </div>
                 <div class="w-px h-6 bg-slate-200"></div>
                 <div class="flex items-center gap-3">
-                  <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-sm">
+                  <div class="h-8 w-8 bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
                     <span class="text-xs font-bold text-white tabular-nums">{{ activeProducts.length }}</span>
                   </div>
                   <span class="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Aktive</span>
@@ -680,14 +680,14 @@
         @created="onProductCreated"
       />
       <ThemeManager v-if="showThemeManager" :themes="themes" @close="showThemeManager = false" @updated="themes = $event" />
-      <CsvImportModal v-if="showCsvImport" :themes="themes" :dkkRate="dkkRate" :profile="profile" @close="showCsvImport = false" @imported="onCsvImported" />
+      <CsvImportModal v-if="showCsvImport" :dkkRate="dkkRate" :profile="profile" @close="showCsvImport = false" @imported="onCsvImported" />
 
       <!-- Add Media Modal -->
       <div v-if="showAddMediaModal && selectedIds.length === 1" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" @click.self="showAddMediaModal = false">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-200 overflow-hidden">
+        <div class="bg-white w-full max-w-2xl border border-slate-200 overflow-hidden">
           <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-gradient-to-r from-emerald-50 to-white">
             <h3 class="text-base font-bold text-slate-900">Tilføj medie</h3>
-            <button @click="showAddMediaModal = false" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+            <button @click="showAddMediaModal = false" class="p-1.5 hover:bg-slate-100 text-slate-400 transition-colors">
               <X :size="18" />
             </button>
           </div>
@@ -695,7 +695,7 @@
           <div class="px-6 py-5 space-y-4">
             <div>
               <label class="block text-sm font-semibold text-slate-700 mb-2">Type</label>
-              <select v-model="newMediaForm.channel" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+              <select v-model="newMediaForm.channel" class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
                 <option value="">Vælg type</option>
                 <option value="paid">Paid</option>
                 <option value="web">Web</option>
@@ -706,20 +706,20 @@
 
             <div v-if="newMediaForm.channel === 'web'">
               <label class="block text-sm font-semibold text-slate-700 mb-2">URL</label>
-              <input v-model="newMediaForm.url" type="url" placeholder="https://..." class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
+              <input v-model="newMediaForm.url" type="url" placeholder="https://..." class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
             </div>
 
             <div>
               <label class="block text-sm font-semibold text-slate-700 mb-2">Navn (valgfrit)</label>
-              <input v-model="newMediaForm.title" type="text" placeholder="f.eks. 'Facebook'" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
+              <input v-model="newMediaForm.title" type="text" placeholder="f.eks. 'Facebook'" class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" />
             </div>
           </div>
 
-          <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200 flex gap-3 justify-end">
-            <button @click="showAddMediaModal = false" class="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold">
+          <div class="px-6 py-4 bg-white border-t border-slate-200 flex gap-3 justify-end">
+            <button @click="showAddMediaModal = false" class="px-4 py-2.5 border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold">
               Annuller
             </button>
-            <button @click="addMediaToProduct()" :disabled="!newMediaForm.channel" class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold shadow-md active:scale-95">
+            <button @click="addMediaToProduct()" :disabled="!newMediaForm.channel" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold">
               Tilføj
             </button>
           </div>
@@ -730,10 +730,10 @@
 
       <!-- Bulk themes modal -->
       <div v-if="showBulkThemesModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" @click.self="showBulkThemesModal = false">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md border border-slate-200 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
+        <div class="bg-white w-full max-w-md border border-slate-200 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
           <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
             <h3 class="text-base font-bold text-slate-900">Rediger Temaer</h3>
-            <button @click="showBulkThemesModal = false" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+            <button @click="showBulkThemesModal = false" class="p-1.5 hover:bg-slate-100 text-slate-400 transition-colors">
               <X :size="18" />
             </button>
           </div>
@@ -741,7 +741,7 @@
           <div class="px-6 py-5 space-y-4 max-h-[400px] overflow-y-auto">
             <div class="space-y-2">
               <label class="block text-sm font-semibold text-slate-700 mb-3">Vælg temaer at tilføje/fjerne</label>
-              <label v-for="theme in themes" :key="theme.id" class="flex items-center gap-3 p-2.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors">
+              <label v-for="theme in themes" :key="theme.id" class="flex items-center gap-3 p-2.5 hover:bg-slate-50 cursor-pointer transition-colors">
                 <input
                   type="checkbox"
                   :checked="bulkThemesToAdd.has(theme.id) || bulkThemesToRemove.has(theme.id)"
@@ -749,23 +749,23 @@
                   class="w-4 h-4 cursor-pointer"
                 />
                 <span class="text-sm text-slate-700 font-medium flex-1">{{ theme.name }}</span>
-                <span v-if="bulkThemesToAdd.has(theme.id)" class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-semibold">+ Tilføj</span>
-                <span v-else-if="bulkThemesToRemove.has(theme.id)" class="text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full font-semibold">- Fjern</span>
+                <span v-if="bulkThemesToAdd.has(theme.id)" class="text-xs px-2 py-1 bg-green-100 text-green-700  font-semibold">+ Tilføj</span>
+                <span v-else-if="bulkThemesToRemove.has(theme.id)" class="text-xs px-2 py-1 bg-red-100 text-red-700  font-semibold">- Fjern</span>
               </label>
             </div>
           </div>
 
-          <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200 flex gap-3 justify-end">
+          <div class="px-6 py-4 bg-white border-t border-slate-200 flex gap-3 justify-end">
             <button
               @click="showBulkThemesModal = false"
-              class="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
+              class="px-4 py-2.5 border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
             >
               Annuller
             </button>
             <button
               @click="saveBulkThemes"
               :disabled="(bulkThemesToAdd.size === 0 && bulkThemesToRemove.size === 0) || bulkThemesAdding"
-              class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold shadow-md active:scale-95"
+              class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold"
             >
               <span v-if="bulkThemesAdding">Gemmer...</span>
               <span v-else>Gem ændringer</span>
@@ -781,15 +781,15 @@
           top: (channelsRef.getBoundingClientRect().top - 4) + 'px',
           left: channelsRef.getBoundingClientRect().left + 'px'
         }">
-          <div class="bg-gradient-to-b from-slate-800 to-slate-900 rounded-xl shadow-2xl border border-slate-700 overflow-hidden backdrop-blur-sm">
+          <div class="bg-slate-800 border border-slate-700 overflow-hidden backdrop-blur-sm">
             <div class="p-1">
             <template v-for="channel in ['paid', 'web', 'email', 'some'].filter(c => selectedProductForChannels?.placements.some(p => p.channel === c))" :key="channel">
               <button
                 @click="navigateToChannel(selectedProductForChannels, channel)"
-                class="w-full text-sm bg-slate-700 hover:bg-slate-600 text-white px-4 py-3 cursor-pointer transition-all duration-150 flex items-center gap-3 justify-between text-left font-medium rounded-lg mb-1 last:mb-0 hover:scale-105 hover:shadow-lg active:scale-95"
+                class="w-full text-sm bg-slate-700 hover:bg-slate-600 text-white px-4 py-3 cursor-pointer transition-all duration-150 flex items-center gap-3 justify-between text-left font-medium mb-1 last:mb-0 hover:scale-105 hover:shadow-lg"
               >
                 <span class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full" :style="{
+                  <span class="w-2 h-2 " :style="{
                     backgroundColor: {
                       'web': '#3b82f6',
                       'some': '#ec4899',
@@ -799,7 +799,7 @@
                   }"></span>
                   {{ getMediaLabel(channel) }}
                 </span>
-                <span class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-white text-slate-800 text-xs font-bold">{{ selectedProductForChannels?.placements.filter(p => p.channel === channel).length }}</span>
+                <span class="inline-flex items-center justify-center h-5 w-5  bg-white text-slate-800 text-xs font-bold">{{ selectedProductForChannels?.placements.filter(p => p.channel === channel).length }}</span>
               </button>
             </template>
             </div>
@@ -1278,5 +1278,5 @@ onMounted(async () => {
   @apply text-xs font-black text-slate-700;
 }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-thumb { @apply bg-slate-200 rounded-full hover:bg-slate-300; }
+::-webkit-scrollbar-thumb { @apply bg-slate-200  hover:bg-slate-300; }
 </style>

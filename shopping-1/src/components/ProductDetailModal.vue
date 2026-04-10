@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" @click.self="$emit('close')">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-200 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+    <div class="bg-white w-full max-w-2xl border border-slate-200 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
 
       <!-- Header -->
       <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
@@ -8,7 +8,7 @@
           <h3 class="text-base font-bold text-slate-900">{{ isBulkEdit ? 'Rediger Temaer' : 'Rediger Produkt' }}</h3>
           <p v-if="isBulkEdit" class="text-xs text-slate-500 mt-1">{{ props.products.length }} produkter valgt</p>
         </div>
-        <button @click="$emit('close')" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors">
+        <button @click="$emit('close')" class="p-1.5 hover:bg-slate-100 text-slate-400 transition-colors">
           <X :size="18" />
         </button>
       </div>
@@ -16,7 +16,7 @@
       <!-- Content -->
       <div class="px-6 py-5 flex-1 overflow-y-auto space-y-5">
         <!-- Debug message -->
-        <div v-if="saving" class="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
+        <div v-if="saving" class="p-4 bg-blue-50 border border-blue-200 text-sm text-blue-700">
           <strong>Status:</strong> Gemmer... Check konsol (F12) for details
         </div>
         <!-- Produktnavn (only for single edit) -->
@@ -25,7 +25,7 @@
           <input
             v-model="formData.name"
             type="text"
-            class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
+            class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
           />
         </div>
 
@@ -36,7 +36,7 @@
             v-model.number="formData.price_eur"
             type="number"
             step="0.01"
-            class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
+            class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
           />
         </div>
 
@@ -47,7 +47,7 @@
             v-model="formData.price_example"
             type="text"
             placeholder="f.eks. '100 stk. til behandling'"
-            class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
+            class="w-full px-4 py-2.5 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300 transition-colors"
           />
         </div>
 
@@ -60,7 +60,7 @@
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-3">Temaer</label>
           <div class="space-y-2">
-            <label v-for="theme in themes" :key="theme.id" class="flex items-center gap-3 p-2.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors">
+            <label v-for="theme in themes" :key="theme.id" class="flex items-center gap-3 p-2.5 hover:bg-slate-50 cursor-pointer transition-colors">
               <input
                 type="checkbox"
                 :checked="formData.themeIds.includes(theme.id)"
@@ -78,9 +78,9 @@
 
           <!-- Existing media -->
           <div class="space-y-2">
-            <div v-for="placement in formData.placements" :key="placement.id" class="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <div v-for="placement in formData.placements" :key="placement.id" class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200">
               <div class="flex items-center gap-3">
-                <span class="inline-block px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">
+                <span class="inline-block px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold ">
                   {{ getMediaLabel(placement.channel) }}
                 </span>
                 <span v-if="placement.title" class="text-sm text-slate-700">{{ placement.title }}</span>
@@ -88,7 +88,7 @@
                   {{ getUrlHostname(placement.url) }}
                 </a>
               </div>
-              <button @click="removeMedia(placement.id)" class="p-1.5 rounded-lg hover:bg-red-100 text-red-600 transition-colors">
+              <button @click="removeMedia(placement.id)" class="p-1.5 hover:bg-red-100 text-red-600 transition-colors">
                 <X :size="16" />
               </button>
             </div>
@@ -97,17 +97,17 @@
       </div>
 
       <!-- Footer -->
-      <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-white border-t border-slate-200 flex gap-3 justify-end">
+      <div class="px-6 py-4 bg-white border-t border-slate-200 flex gap-3 justify-end">
         <button
           @click="$emit('close')"
-          class="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
+          class="px-4 py-2.5 border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm font-semibold"
         >
           Annuller
         </button>
         <button
           @click="saveProduct()"
           :disabled="saving"
-          class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold shadow-md active:scale-95"
+          class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:from-slate-400 disabled:to-slate-400 text-white transition-all text-sm font-semibold"
         >
           <span v-if="saving">Gemmer...</span>
           <span v-else>Gem ændringer</span>

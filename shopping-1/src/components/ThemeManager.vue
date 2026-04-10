@@ -1,10 +1,10 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" @click.self="$emit('close')">
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-md border border-msf-border overflow-hidden">
+    <div class="bg-white w-full max-w-md border border-msf-border overflow-hidden">
       
       <div class="flex items-center justify-between px-6 py-4 border-b border-msf-border bg-gray-50/50">
         <h3 class="text-base font-semibold text-msf-navy">Administrer Temaer</h3>
-        <button @click="$emit('close')" class="p-1.5 rounded-full hover:bg-gray-200 text-gray-400 transition-colors">
+        <button @click="$emit('close')" class="p-1.5  hover:bg-gray-200 text-gray-400 transition-colors">
           <X :size="18" />
         </button>
       </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
-          <ul class="divide-y divide-msf-border border rounded-lg overflow-hidden">
+          <ul class="divide-y divide-msf-border border overflow-hidden">
             <li
               v-for="theme in sortedThemes"
               :key="theme.id"

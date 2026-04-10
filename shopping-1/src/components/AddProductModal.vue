@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-msf-navy/60 backdrop-blur-sm" @click.self="$emit('close')">
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl border border-gray-200 overflow-hidden">
+    <div class="bg-white w-full max-w-2xl border border-gray-200 overflow-hidden">
       <div class="flex items-center justify-between px-6 py-4 bg-gray-50 border-b border-gray-200">
         <div>
           <h3 class="text-lg font-bold text-msf-navy">Opret nyt produkt</h3>
@@ -36,7 +36,7 @@
 
           <div class="col-span-6">
             <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-2">Temaer</label>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 p-3 rounded-lg border border-gray-100 bg-gray-50 max-h-40 overflow-y-auto">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 p-3 border border-gray-100 bg-gray-50 max-h-40 overflow-y-auto">
               <label
                 v-for="theme in themes"
                 :key="theme.id"
