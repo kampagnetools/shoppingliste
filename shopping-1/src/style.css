@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-msf-bg text-gray-800 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-1.5 rounded-lg bg-msf-navy px-3 py-1.5 text-xs font-medium text-white
+           hover:bg-msf-navy-80 focus:outline-none focus:ring-2 focus:ring-msf-navy/40
+           disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 shadow-sm;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-gray-600
+           hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200
+           disabled:opacity-40 transition-all duration-150;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-red-600
+           hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200
+           disabled:opacity-40 transition-all duration-150;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800
+           placeholder:text-gray-400
+           focus:border-msf-navy focus:outline-none focus:ring-2 focus:ring-msf-navy/20
+           hover:border-gray-300
+           disabled:bg-gray-50 disabled:text-gray-400 transition-all duration-150;
+  }
+
+  .badge-channel {
+    @apply inline-flex items-center rounded px-1.5 py-0.5 text-xs font-medium tracking-wide;
+  }
+
+  .table-th {
+    @apply px-4 py-2.5 text-left text-xs font-medium text-gray-400 uppercase tracking-widest;
+  }
+}
