@@ -42,13 +42,13 @@
             <!-- Header - fixed -->
             <div class="bg-slate-100 border-b border-slate-200 grid px-4 py-3 sticky top-0" style="grid-template-columns: 1fr 60px; gap: 12px;">
               <div class="text-xs font-bold text-slate-700">Produkt</div>
-              <div class="text-xs font-bold text-slate-700 text-right">Pris</div>
+              <div class="text-xs font-bold text-slate-700">Pris</div>
             </div>
             <!-- Rows - scrollable -->
             <div class="max-h-[300px] overflow-y-auto">
               <div v-for="(row, idx) in rows" :key="idx" class="grid px-4 py-3 border-b border-slate-200 transition-colors" :class="row.hasMissingColumns ? 'bg-amber-50 hover:bg-amber-100' : 'hover:bg-slate-100'" style="grid-template-columns: 1fr 60px; gap: 12px; align-items: center;">
                 <div class="text-xs truncate font-medium" :class="row.hasMissingColumns ? 'text-amber-700' : 'text-slate-700'">{{ row.description || '—' }}</div>
-                <div class="text-xs font-mono text-right" :class="row.hasMissingColumns ? 'text-amber-700' : 'text-slate-700'">{{ row.priceExample || '—' }}</div>
+                <div class="text-xs font-mono" :class="row.hasMissingColumns ? 'text-amber-700' : 'text-slate-700'">{{ row.priceExample || '—' }}</div>
               </div>
             </div>
           </div>
